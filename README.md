@@ -8,9 +8,9 @@ A full-stack web application to manage AI image generation prompts with real-tim
 
 * Create AI prompts
 * View all prompts
-* View prompt details
+* View detailed prompt information
 * Redis-based live view counter
-* Clean REST API (Django without DRF)
+* Clean REST API using Django (no DRF)
 
 ---
 
@@ -30,7 +30,7 @@ A full-stack web application to manage AI image generation prompts with real-tim
 
 **Cache**
 
-* Redis (used as source of truth for view count)
+* Redis (source of truth for view count)
 
 ---
 
@@ -38,8 +38,8 @@ A full-stack web application to manage AI image generation prompts with real-tim
 
 * Angular frontend consumes Django APIs
 * Django handles CRUD operations
-* Redis tracks and increments prompt views
-* View count is NOT stored in DB (Redis only)
+* Redis increments and stores view counts
+* View count is NOT stored in database
 
 ---
 
@@ -110,7 +110,7 @@ GET /prompts/<id>/
 ## 🔥 Key Design Decisions
 
 * Used Django without DRF to match assignment constraints
-* Function-based views for simplicity
+* Function-based views for simplicity and control
 * Redis used as the single source of truth for view count
 * Angular standalone components for minimal setup
 * Focused on working system over over-engineering
@@ -121,13 +121,65 @@ GET /prompts/<id>/
 
 * No authentication (bonus feature not implemented)
 * SQLite used instead of PostgreSQL
-* Basic UI (no heavy styling)
+* Basic UI styling
 
 ---
 
-## 📹 Demo
+## 🐳 Docker Setup
 
-(Add your screen recording link here)
+This project includes a basic Docker configuration to run the full stack (Frontend, Backend, and Redis) using Docker Compose.
+
+---
+
+### Prerequisites
+
+* Docker installed
+* Docker Compose installed
+
+---
+
+### Run the application
+
+From the project root:
+
+```bash
+docker-compose up --build
+```
+
+---
+
+### Services
+
+| Service  | URL / Port            | Description        |
+| -------- | --------------------- | ------------------ |
+| Frontend | http://localhost:4200 | Angular app        |
+| Backend  | http://localhost:8000 | Django API         |
+| Redis    | localhost:6379        | View counter store |
+
+---
+
+### Notes
+
+* Backend runs Django development server inside container
+* Redis is used as the source of truth for view counts
+* SQLite is used for simplicity
+* Volumes are mounted for live code changes
+
+---
+
+### Limitations (Docker)
+
+* Not optimized for production
+* No environment variable management
+* Angular runs in dev mode
+
+---
+
+### Stop containers
+
+```bash
+docker-compose down
+```
 
 ---
 
